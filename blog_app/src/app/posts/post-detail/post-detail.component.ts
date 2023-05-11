@@ -14,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 export class PostDetailComponent implements OnInit {
   public currentPost: IPost;
   public currentUser: IUser;
+  public users: IUser
   public currentComments: IComment[];
 
   public postId: number;
