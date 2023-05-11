@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 export class PostDetailComponent implements OnInit {
   public currentPost: IPost;
   public currentUser: IUser;
-  public users: IUser
+  public users: IUser;
   public currentComments: IComment[];
 
   public postId: number;
@@ -25,12 +25,15 @@ export class PostDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getId();
     this.getPosts();
     this.getUsers();
     this.getComments();
+  }
+
+  public getId() {
     this.activatedRoute.params.subscribe((param) => {
       this.postId = Number(param['id']);
-      console.log(this.postId);
     });
   }
 
@@ -39,11 +42,11 @@ export class PostDetailComponent implements OnInit {
       .fetchPosts()
       .pipe(
         tap((postsResponse?) => {
-          if(this.postId) {
-          this.currentPost = postsResponse.filter(post => post.id === this.postId)[0];
-          console.log(this.currentPost)
-        }
-
+          if (this.postId) {
+            this.currentPost = postsResponse.filter(
+              (post) => post.id === this.postId
+            )[0];
+          }
         })
       )
       .subscribe();
@@ -54,8 +57,9 @@ export class PostDetailComponent implements OnInit {
       .fetchUsers()
       .pipe(
         tap((userResponse?) => {
-          this.currentUser = userResponse.filter(user => user.id === this.currentPost?.userId)[0];
-          console.log(this.currentUser)
+          this.currentUser = userResponse.filter(
+            (user) => user.id === this.currentPost?.userId
+          )[0];
         })
       )
       .subscribe();
@@ -66,8 +70,9 @@ export class PostDetailComponent implements OnInit {
       .fetchComments()
       .pipe(
         tap((commentsResponse?) => {
-          this.currentComments = commentsResponse.filter(comment => comment.postId === this.currentPost?.id);
-          console.log(this.currentComments)
+          this.currentComments = commentsResponse.filter(
+            (comment) => comment.postId === this.currentPost?.id
+          );
         })
       )
       .subscribe();
